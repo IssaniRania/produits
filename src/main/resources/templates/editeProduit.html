@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="template">
+<link rel="stylesheet" type="text/css"
+      href="webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<div layout:fragment="Mycontent">
+<div class="container">
+  <div class="card-body">
+    <form th:action="@{/updateProduit(id=${produit.idProduit})}" method="post">
+      <input type="hidden" th:name="idProduit" th:value="${produit.idProduit}">
+      <h2 class="text-center">Formulaire de Modifier les Produits</h2>
+      <label class="form-label">Nom :</label>
+      <div class="form-floating mb-3">
+        <input type="Text" class="form-control" name="nomProduit" th:value="${produit.nomProduit}">
+      </div>
+      <label class="form-label">Prix :</label>
+      <div class="form-floating mb-3">
+        <input type="Text" class="form-control" name="prixProduit" th:value="${produit.prixProduit}">
+      </div>
+      <div class="form-floating mb-3">
+        <input type="date" name="date" class="form-control" th:value="${produit.dateCreation}">
+      </div>
+      <div>
+        <button type="submit" class="btn btn-primary">Modifier</button>
+      </div>
+    </form>
+  </div>
+  <div class="alert alert-danger" th:if="${errorMessage}">
+    <p th:text="${errorMessage}"></p>
+  </div>
+</div>
+</div>
+</body>
+</html>

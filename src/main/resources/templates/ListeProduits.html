@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec=https://www.thymeleaf.org/thymeleaf-extras-springsecurity5
+      layout:decorate="template">
+
+<link rel="stylesheet" type="text/css"
+      href="webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
+<head>
+  <meta charset="utf-8">
+  <title>Liste des Produits</title>
+</head>
+<body>
+<div layout:fragment="Mycontent">
+  <br><br><br>
+<div>
+  <form  action="search" method="post" class="form-inline">
+    <label>Filtre:</label>
+    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="name">
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">GO</button>
+  </form>
+</div>
+  <br><br><br>
+  <div class="container">
+    <div class="card">
+      <div class="card-header">
+        Liste des Produits
+      </div>
+      <div class="card-body">
+        <table class="table table-striped">
+          <tr>
+            <th>ID</th><th>Nom Produit</th><th>Prix</th>
+          </tr>
+          <tr th:each="p :${produits}">
+            <td th:text="${p.idProduit}"></td>
+            <td th:text="${p.nomProduit}"></td>
+            <td th:text="${p.prixProduit}"></td>
+            <td sec:authorize="hasRole('ADMIN')" ><a onclick="return confirm('Etes-vous sûr ?')"
+                                                     class="btn btn-danger" th:href="@{supprimerProduit(id=${p.idProduit},
+page=${currentPage},size=${size})}">Supprimer</a></td>
+            <td sec:authorize="hasRole('ADMIN')" ><a class="btn btn-success" th:href="@{modifierProduit(id=${p.idProduit})}">Editer</a></td>
+          </tr>
+        </table>
+        <ul class="nav nav-pills">
+          <li th:each="page,status:${pages}">
+            <a th:class="${status.index==currentPage?'btn btn-primary':'btn'
+}"
+               th:href="@{ ListeProduits(page=${status.index}, size=${size} )
+}"
+               th:text="${status.index }"></a>
+          </li>
+        </ul>
+
+      </div>
+    </div>
+    <div class="alert alert-danger" th:if="${errorMessage}">
+      <p th:text="${errorMessage}"></p>
+    </div>
+  </div>
+</div>
+</body>
+</html>

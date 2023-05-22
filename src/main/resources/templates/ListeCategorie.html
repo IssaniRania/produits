@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="template">
+
+<link rel="stylesheet" type="text/css"
+      href="webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
+<head>
+  <meta charset="utf-8">
+  <title>Liste des Categories</title>
+</head>
+<body>
+<div layout:fragment="Mycontent">
+  <br><br><br>
+<div>
+  <form  action="searchCategorie" method="post" class="form-inline">
+    <label>Filtre:</label>
+    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="name">
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">GO</button>
+  </form>
+</div>
+  <br><br><br>
+<div class="container">
+  <div class="card">
+    <div class="card-header">
+      Liste des Categories
+    </div>
+    <div class="card-body">
+      <table class="table table-striped">
+        <tr>
+          <th>ID</th>
+          <th>Nom Categorie</th>
+          <th>Description</th>
+        </tr>
+        <tr th:each="c:${categories}">
+          <td th:text="${c.idCat}"></td>
+          <td th:text="${c.nomCat}"></td>
+          <td th:text="${c.descriptionCat}"></td>
+          <td><a class="btn btn-danger" onclick="return confirm('Etes vous sûr ?')"
+                 th:href="@{supprimerCategorie(id=${c.idCat},
+page=${currentPage},size=${size})}">Supprimer</a>
+            <a class="btn btn-warning" th:href="@{modifierCategorie(id=${c.idCat},page=${currentPage},size=${size})}">Edit</a>
+          </td>
+        </tr>
+      </table>
+
+    </div>
+  </div>
+</div>
+<div class="alert alert-danger" th:if="${errorMessage}">
+  <p th:text="${errorMessage}"></p>
+</div>
+</div>
+</div>
+</body>
+</html>

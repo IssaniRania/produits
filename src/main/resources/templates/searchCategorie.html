@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="template">
+
+<link rel="stylesheet" type="text/css"
+      href="webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
+<head>
+  <meta charset="utf-8">
+  <title>Liste des Produits</title>
+</head>
+<body>
+<div layout:fragment="Mycontent">
+<div class="container">
+  <div class="card">
+    <div class="card-header">
+      <h2>Résultats de la recherche pour "<span th:text="${searchTerm}"></span>"</h2>
+      <div class="card-body">
+        <table class="table table-striped">
+          <tr>
+            <th>ID</th>
+            <th>Nom Catégorie</th>
+            <th>Description</th>
+          </tr>
+          <tr th:each="c : ${categories}">
+            <td th:text="${c.idCat}"></td>
+            <td th:text="${c.nomCat}"></td>
+            <td th:text="${c.descriptionCat}"></td>
+          </tr>
+        </table>
+        <ul class="nav nav-pills">
+          <li th:each="page,status:${pages}">
+            <a th:class="${status.index==currentPage?'btn btn-primary':'btn'
+}"
+               th:href="@{ ListeProduits(page=${status.index}, size=${size} )
+}"
+               th:text="${status.index }"></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</body>
+</html>
